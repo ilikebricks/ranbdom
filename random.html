@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        * {
+            font-family: "monaco", monospace;
+            color: rgb(200, 200, 200);
+        }
+        body {
+            margin: 0vw;
+            padding: calc(3vw + 1ex);
+            height: 110vh;
+            background-image: url("background.svg");
+            background-repeat: no-repeat;
+            background-size: calc(180vh + 20ex);
+            background-position: 30% 30%;
+        }
+        span {
+            font-size: xx-large;
+            font-family: "monaco", monospace;
+        }
+        div#top {
+            font-size: small;
+            font-family: "monaco", monospace;
+        }
+        textarea {
+            background-color: rgba(0,0,0,0);
+            border: 0vw;
+            resize: none;
+            padding: 1ex;
+            scrollbar-width: none;
+        }
+        textarea::-webkit-scrollbar {
+            display: none;
+        }
+        #sidePane {
+            position: fixed;
+            width: 1vw;
+            right: 0%;
+            top: 0%;
+            bottom: 90%;
+            background-color: rgba(255,0,0,0);
+        }
+        #contents {
+            display: none;
+            padding: 1.5ex;
+            background-color: rgba(255,255,255,0.2);
+            position: fixed;
+            width: 15vw;
+            min-width: 12ex;
+            max-width: 30ex;
+            top: 0%;
+            height: 20ex;
+            right: 0%;
+            z-index: 5;
+        }
+        #xss {
+            position: absolute;
+            left: 50%;
+            right: calc(3vw + 1ex);
+            bottom: 0;
+            height: 7vh;
+            min-height: 7ex;
+        }
+        ::placeholder {
+            color: rgba(200,200,200,0.9);
+        }
+        #background {
+            background-color: rgba(34,84,100,1);
+        }
+        #close {
+            padding: 1.5ex;
+            bottom: 0%;
+            right: 0%;
+            position: absolute;
+            font-size: small;
+        }
+        #oh {
+            display: inline-block;
+            margin: 1ex 0ex;
+        }
+        #oh:not(#oh:hover) {
+            animation: mnvisible 0.5s 1;
+            opacity: 0%;
+        }
+        .ba {
+            font-size: 36px;
+        }
+        a:link, a:visited, a:focus { 
+            color: rgb(200, 200, 200);
+            text-decoration-line: none!important;
+            -moz-text-decoration-line: none!important;
+            -webkit-text-decoration-line: none!important;
+        }
+        a:hover {
+            animation-duration: 1s;
+            animation-name: linkhover;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+            opacity: 70%;
+            cursor: text;
+            color: rgb(200, 200, 200);
+        }
+        #oh:hover {
+            animation: mvisible 0.5s 1;
+        }
+        a:not(a:hover) {
+            animation-duration: 0.8s;
+            animation-name: unlinkhover;
+        }
+        @keyframes mvisible {
+            from {
+                opacity: 80%;
+            }
+
+            to {
+                opacity: 100%;
+            }
+        }
+        @keyframes mnvisible {
+            from {
+                opacity: 20%;
+            }
+
+            to {
+                opacity: 0%;
+            }
+        }
+        @keyframes linkhover {
+            from {
+                opacity: 100%;
+                 
+            }
+            
+            to {
+                opacity: 70%;
+            }
+            
+        }
+        @keyframes unlinkhover {
+            from {
+                opacity: 70%;
+                 
+            }
+            
+            to {
+                opacity: 100%;
+            }
+            
+        }
+    </style>
+
+</head>
+<body id="background" onscroll="backgroundThing()">
+    
+    <span><a href="Zi Tong Xu.JPG">H</a></span><span><a href="STAR and Stripes.mp3">i</a></span>
+    <div id="top"></div>
+    <textarea placeholder="xss?" id="xss" rows="2" cols="22"></textarea>
+    <div onmouseenter="sidePane()" id="sidePane"></div>
+    <div id="contents">
+            <div onclick="notSidePane()" id="close">close</div>
+    </div>
+    <div id="oh">This is a test page</div>
+    <div class="ba">BABABABABABABABABABABABABABABABABA</div>
+    <script>
+        var Top;
+        let windowLength = document.getElementById("background").scrollHeight;
+        var b = document.getElementById("background");
+        
+        function backgroundThing() {
+            Top = window.scrollY*400/windowLength;
+            
+            
+            document.getElementById("top").innerHTML = /[^(abc)]/;
+            b.style.backgroundColor = 'rgba(34,84,100,1)'.replace(/[^,]+(?=,[\d]+[.]*[\d]*\))/, Math.round((100-Top)/7)*7)
+        }
+        
+        const content = document.getElementById("contents");
+        let sidePane = () => content.style.display = "flex";
+        let notSidePane = () => content.style.display = "none";
+    </script>
+</body>
+</html>
