@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <style>
         * {
-            font-family: "monaco", monospace;
+            font-family: "monaco", "Lucida Sans Typewriter", monospace;
             color: rgb(200, 200, 200);
         }
         body {
@@ -18,11 +18,11 @@
         }
         span {
             font-size: xx-large;
-            font-family: "monaco", monospace;
+            font-family: "monaco", "Lucida Sans Typewriter", monospace;
         }
         div#top {
             font-size: small;
-            font-family: "monaco", monospace;
+            font-family: "monaco", "Lucida Sans Typewriter", monospace;
         }
         textarea {
             background-color: rgba(0,0,0,0);
@@ -41,6 +41,13 @@
             top: 0%;
             bottom: 90%;
             background-color: rgba(255,0,0,0);
+        }
+        #contents.enabled {
+            display: flex;
+            animation: fadein 0.8s ease;
+        }
+        #contents.i {
+            animation: fadeout 0.8s ease;
         }
         #contents {
             display: none;
@@ -84,8 +91,18 @@
             animation: mnvisible 0.5s 1;
             opacity: 0%;
         }
-        .ba {
+        #ba {
             font-size: 36px;
+            overflow: hidden;
+            margin: 0 calc(-4vw - 8px) 0 calc(-4vw - 8px);
+            left: 3ex;
+            overflow-wrap: break-word;
+        }
+        #ba span {
+            opacity: 0;
+        }
+        [name="ba"] {
+            transition: all ease 0.4s;
         }
         a:link, a:visited, a:focus { 
             color: rgb(200, 200, 200);
@@ -149,6 +166,30 @@
             }
             
         }
+        @keyframes fadein {
+            from {
+                opacity: 0%;
+            }
+            1% {
+                display: flex;
+                opacity: 0%;
+            }
+            to {
+                opacity: 100%;
+            }
+        }
+        @keyframes fadeout {
+            from {
+                opacity: 100%;
+            }
+            99% {
+                opacity: 0%;
+                display: none;
+            }
+            to {
+                opacity: 0%;
+            }
+        }
     </style>
 
 </head>
@@ -162,14 +203,14 @@
             <div onclick="notSidePane()" id="close">close</div>
     </div>
     <div id="oh">This is a test page</div>
-    <div class="ba">BABABABABABABABABABABABABABABABABA</div>
+    <div id="ba"><span name="ba"></span></div>
     <script>
         var Top;
         let windowLength = document.getElementById("background").scrollHeight;
         var b = document.getElementById("background");
         
         function backgroundThing() {
-            Top = window.scrollY*400/windowLength;
+            Top = window.scrollY*200/windowLength;
             
             
             document.getElementById("top").innerHTML = /[^(abc)]/;
@@ -177,8 +218,31 @@
         }
         
         const content = document.getElementById("contents");
-        let sidePane = () => content.style.display = "flex";
-        let notSidePane = () => content.style.display = "none";
+        let bc = document.getElementById("ba");
+
+        const bb = document.getElementsByName("ba");
+        for (let x=0; x<500; x++) {
+            let bd = bb[0].cloneNode();
+            bc.appendChild(bd);
+        }
+
+        // assign
+        let x = [];
+        for (let i=0; i<bb.length; i++) {
+            bb[i].id = `ba${i}`;
+            x[i] = 0;
+            bb[i].textContent = "BA";
+        }
+        for (let i=0; i<bb.length; i++) {
+            let blocal = document.getElementById(`ba${i}`);
+            blocal.addEventListener("mouseenter", function(event) {
+                x[i] += 0.1;
+                event.target.style.opacity = x[i];
+            }, false)
+        }
+        let sidePane = () => document.getElementById("contents").className = "enabled";
+        let notSidePane = () => document.getElementById("contents").className = "i";
+
     </script>
 </body>
 </html>
