@@ -3,6 +3,9 @@
 <head>
     <meta charset="utf-8">
     <style>
+        :root {
+            height: 110vh;
+        }
         * {
             font-family: "monaco", "Lucida Sans Typewriter", monospace;
             color: rgb(200, 200, 200);
@@ -11,10 +14,15 @@
             margin: 0vw;
             padding: calc(3vw + 1ex);
             height: 110vh;
-            background-image: url("background.svg");
-            background-repeat: no-repeat;
-            background-size: calc(180vh + 20ex);
-            background-position: 30% 30%;
+            overflow-x: hidden;
+        }
+        #backgroundi {
+            position: fixed;
+            transform: scale(2);
+            top: 30%;
+            left: 27%;
+            overflow: hidden;
+            pointer-events: none;
         }
         span {
             font-size: xx-large;
@@ -45,9 +53,6 @@
         #contents.enabled {
             display: flex;
             animation: fadein 0.8s ease;
-        }
-        #contents.i {
-            animation: fadeout 0.8s ease;
         }
         #contents {
             display: none;
@@ -82,6 +87,10 @@
             right: 0%;
             position: absolute;
             font-size: small;
+            transition: all ease 1s;
+        }
+        #close:hover {
+            color: rgb(255, 200, 200);
         }
         #oh {
             display: inline-block;
@@ -178,54 +187,115 @@
                 opacity: 100%;
             }
         }
-        @keyframes fadeout {
-            from {
-                opacity: 100%;
-            }
-            99% {
-                opacity: 0%;
-                display: none;
-            }
-            to {
-                opacity: 0%;
-            }
-        }
     </style>
 
 </head>
 <body id="background" onscroll="backgroundThing()">
-    
+    <svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="backgroundi"
+   inkscape:version="1.1 (c4e8f9e, 2021-05-24)"
+   sodipodi:docname="background.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.27597631"
+     inkscape:cx="574.32466"
+     inkscape:cy="489.17242"
+     inkscape:window-width="1312"
+     inkscape:window-height="816"
+     inkscape:window-x="0"
+     inkscape:window-y="23"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g9087"
+       transform="matrix(0.85462634,0,0,0.85462634,17.999989,-21.320026)">
+      <path
+         style="opacity:1;fill:none;stroke:#00f0ad;stroke-width:3.865;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.493927"
+         d="M 198,43.943878 C 156.58163,177.79592 18.688775,210.62755 18.688775,210.62755 107.2426,232.90723 165.79837,315.14849 165.79837,315.14849"
+         id="path890" />
+      <path
+         style="fill:none;stroke:#0092ff;stroke-width:3.865;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.611336"
+         d="m 144.21655,241.07046 c 0,0 35.82425,-0.29178 32.26304,-21.81039 C 173.4881,201.18401 97.989794,113.14286 13.637755,102.03061 80.267465,90.136415 158.56114,70.398514 158.56114,70.398514"
+         id="path3058"
+         sodipodi:nodetypes="csc" />
+      <path
+         style="fill:none;stroke:#00ffff;stroke-width:3.865;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.5"
+         d="m 61.11734,33.336733 c 163.51201,45.15543 118.15683,126.831577 55.05612,202.040817 -35.53093,42.34903 32.87605,80.29981 62.63377,45.07308 30.85235,-36.52254 -62.86743,-81.06256 -93.66093,-83.54981"
+         id="path4202"
+         sodipodi:nodetypes="cssc" />
+      <g
+         id="g5422">
+        <path
+           style="fill:none;stroke:#0090d2;stroke-width:3.865;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.526316"
+           d="m 30.306123,64.147958 c 32.045546,34.497469 30.205641,112.623292 38.064439,165.506652 3.222654,21.68586 28.589135,36.02745 31.097275,55.40938 4.491433,34.70807 -13.888774,48.53348 -21.174162,80.74511"
+           sodipodi:nodetypes="cssc"
+           id="path9084" />
+      </g>
+    </g>
+  </g>
+</svg>
     <span><a href="Zi Tong Xu.JPG">H</a></span><span><a href="STAR and Stripes.mp3">i</a></span>
     <div id="top"></div>
     <textarea placeholder="xss?" id="xss" rows="2" cols="22"></textarea>
     <div onmouseenter="sidePane()" id="sidePane"></div>
     <div id="contents">
-            <div onclick="notSidePane()" id="close">close</div>
+            <div onclick="notSidePane()" id="close" onmouseleave="cool()">close</div>
     </div>
-    <div id="oh">This is a test page</div>
+    <div id="oh">This is david</div>
     <div id="ba"><span name="ba"></span></div>
     <script>
         var Top;
         let windowLength = document.getElementById("background").scrollHeight;
         var b = document.getElementById("background");
-        
-        function backgroundThing() {
-            Top = window.scrollY*200/windowLength;
-            
-            
-            document.getElementById("top").innerHTML = /[^(abc)]/;
-            b.style.backgroundColor = 'rgba(34,84,100,1)'.replace(/[^,]+(?=,[\d]+[.]*[\d]*\))/, Math.round((100-Top)/7)*7)
-        }
-        
+        var body = document.body,
+        html = document.documentElement;
+
+        var height = Math.max( body.scrollHeight, body.offsetHeight, 
+                       html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+                       
+                       function backgroundThing() {
+                           Top = (window.scrollY*54000/height)/windowLength;
+                           
+                           b.style.backgroundColor = 'rgba(34,84,100,1)'.replace(/[^,]+(?=,[\d]+[.]*[\d]*\))/, Math.round((100-Top)/7)*7)
+                           
+                           
+                           //
+                           document.getElementById("backgroundi").style.top = `${30-window.scrollY/1.9}%`;
+                           document.getElementById("top").innerHTML = `${window.scrollY}`;
+                        }
+                        
         const content = document.getElementById("contents");
         let bc = document.getElementById("ba");
-
+        
         const bb = document.getElementsByName("ba");
         for (let x=0; x<500; x++) {
             let bd = bb[0].cloneNode();
             bc.appendChild(bd);
         }
-
+        
         // assign
         let x = [];
         for (let i=0; i<bb.length; i++) {
@@ -240,9 +310,19 @@
                 event.target.style.opacity = x[i];
             }, false)
         }
-        let sidePane = () => document.getElementById("contents").className = "enabled";
-        let notSidePane = () => document.getElementById("contents").className = "i";
-
-    </script>
+        let closebutton = document.getElementById("close");
+        let sidePane = () => {
+            document.getElementById("contents").className = "enabled";
+            closebutton.style.transform = "matrix(1, 0, 0, 1, 0, 0)"
+        }
+        let notSidePane = () => document.getElementById("contents").className = "";
+        
+        let closecount = 1;
+        function cool() {
+            closecount++;
+            
+            closebutton.style.transform = `matrix(1, ${Math.random()/2}, ${Math.random()/2}, ${(closecount % 2) * 2 - 1}, 0, 0)`
+        }
+        </script>
 </body>
 </html>
