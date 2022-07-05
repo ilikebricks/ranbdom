@@ -291,9 +291,9 @@
                            
                            
                             //
-                            document.getElementById("backgroundi").style.transition = `all ${sigmoid(Math.log2(othersmootht)-(Math.log(othersmootht)/Math.log(2.001)))*20-9.9}s`;
+                            document.getElementById("backgroundi").style.transition = `all ${sigmoid(Math.log2(othersmootht)-(Math.log(othersmootht)/Math.log(2.001)))*20-9.99}s`;
                             document.getElementById("backgroundi").style.top = `${30-window.scrollY/1.9}%`;
-                            document.getElementById("top").innerHTML = `${sigmoid(Math.log2(othersmootht)-(Math.log(othersmootht)/Math.log(2.001)))*20-9.9}`;
+                            document.getElementById("top").innerHTML = `${sigmoid(Math.log2(othersmootht)-(Math.log(othersmootht)/Math.log(2.001)))*20-9.99}`;
                             smootht = performance.now();
                         }
 
