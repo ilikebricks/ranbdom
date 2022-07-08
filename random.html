@@ -22,8 +22,6 @@
             top: 30%;
             left: 27%;
             overflow: hidden;
-            pointer-events: none;
-            transition: all 0.1s;
         }
         span {
             font-size: xx-large;
@@ -50,6 +48,7 @@
             top: 0%;
             bottom: 90%;
             background-color: rgba(255,0,0,0);
+            
         }
         #contents.enabled {
             display: flex;
@@ -67,6 +66,10 @@
             height: 20ex;
             right: 0%;
             z-index: 5;
+            pointer-events: none;
+        }
+        #contents * {
+            pointer-events: initial;
         }
         #xss {
             position: absolute;
@@ -80,7 +83,7 @@
             color: rgba(200,200,200,0.9);
         }
         #background {
-            background-color: rgba(34,84,100,1);
+            background-color: rgb(34, 84, 98);
         }
         #close {
             padding: 1.5ex;
@@ -188,6 +191,16 @@
                 opacity: 100%;
             }
         }
+        #blue1, #blue2, #blue3, #green1 {
+            transition: all 0.9s ease;
+            pointer-events: visibleStroke;
+        }
+        #things {
+            font-size: small;
+        }
+        #things a {
+            margin-right: 1em;
+        }
     </style>
 
 </head>
@@ -235,25 +248,22 @@
       <path
          style="opacity:1;fill:none;stroke:#00f0ad;stroke-width:3.865;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.493927"
          d="M 198,43.943878 C 156.58163,177.79592 18.688775,210.62755 18.688775,210.62755 107.2426,232.90723 165.79837,315.14849 165.79837,315.14849"
-         id="path890" />
+         id="green1" />
       <path
          style="fill:none;stroke:#0092ff;stroke-width:3.865;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.611336"
          d="m 144.21655,241.07046 c 0,0 35.82425,-0.29178 32.26304,-21.81039 C 173.4881,201.18401 97.989794,113.14286 13.637755,102.03061 80.267465,90.136415 158.56114,70.398514 158.56114,70.398514"
-         id="path3058"
+         id="blue3"
          sodipodi:nodetypes="csc" />
       <path
          style="fill:none;stroke:#00ffff;stroke-width:3.865;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.5"
          d="m 61.11734,33.336733 c 163.51201,45.15543 118.15683,126.831577 55.05612,202.040817 -35.53093,42.34903 32.87605,80.29981 62.63377,45.07308 30.85235,-36.52254 -62.86743,-81.06256 -93.66093,-83.54981"
-         id="path4202"
+         id="blue2"
          sodipodi:nodetypes="cssc" />
-      <g
-         id="g5422">
         <path
            style="fill:none;stroke:#0090d2;stroke-width:3.865;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.526316"
            d="m 30.306123,64.147958 c 32.045546,34.497469 30.205641,112.623292 38.064439,165.506652 3.222654,21.68586 28.589135,36.02745 31.097275,55.40938 4.491433,34.70807 -13.888774,48.53348 -21.174162,80.74511"
            sodipodi:nodetypes="cssc"
-           id="path9084" />
-      </g>
+           id="blue1" />
     </g>
   </g>
 </svg>
@@ -262,43 +272,15 @@
     <textarea placeholder="xss?" id="xss" rows="2" cols="22"></textarea>
     <div onmouseenter="sidePane()" id="sidePane"></div>
     <div id="contents">
+        <div id="things">
+            <a href="you.html">you</a><a href="/ranbdom/">..</a>
+        </div>
         <div onclick="notSidePane()" id="close" onmouseleave="cool()">close</div>
     </div>
     <div id="oh">This is david</div>
     <div id="ba"><span name="ba"></span></div>
+    <script src="background.js"></script>
     <script>
-        var Top;
-        let scrolled = false;
-        let windowLength = document.getElementById("background").scrollHeight;
-        var b = document.getElementById("background");
-        var body = document.body,
-        html = document.documentElement;
-        
-        var height = Math.max( body.scrollHeight, body.offsetHeight, 
-        html.clientHeight, html.scrollHeight, html.offsetHeight );
-        var smootht = performance.now();
-        var othersmootht;
-        function sigmoid(z) {
-  return 1 / (1 + Math.exp(-z));
-}
-                       
-                        function backgroundThing() {
-                            
-                            othersmootht = performance.now() - smootht - 20;
-                            Top = (window.scrollY*54000/height)/windowLength;
-                           
-                            b.style.backgroundColor = 'rgba(34,84,100,1)'.replace(/[^,]+(?=,[\d]+[.]*[\d]*\))/, Math.round((100-Top)/7)*7)
-                           
-                           
-                            //
-                            document.getElementById("backgroundi").style.transition = `all ${sigmoid(Math.log2(othersmootht)-(Math.log(othersmootht)/Math.log(2.001)))*20-9.99}s`;
-                            document.getElementById("backgroundi").style.top = `${30-window.scrollY/1.9}%`;
-                            document.getElementById("top").innerHTML = `${sigmoid(Math.log2(othersmootht)-(Math.log(othersmootht)/Math.log(2.001)))*20-9.99}`;
-                            smootht = performance.now();
-                        }
-
-                     
-        const content = document.getElementById("contents");
         let bc = document.getElementById("ba");
         
         const bb = document.getElementsByName("ba");
@@ -321,19 +303,7 @@
                 event.target.style.opacity = x[i];
             }, false)
         }
-        let closebutton = document.getElementById("close");
-        let sidePane = () => {
-            document.getElementById("contents").className = "enabled";
-            closebutton.style.transform = "matrix(1, 0, 0, 1, 0, 0)"
-        }
-        let notSidePane = () => document.getElementById("contents").className = "";
         
-        let closecount = 1;
-        function cool() {
-            closecount++;
-            
-            closebutton.style.transform = `matrix(1, ${Math.random()/2}, ${Math.random()/2}, ${(closecount % 2) * 2 - 1}, 0, 0)`
-        }
         </script>
 </body>
 </html>
